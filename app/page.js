@@ -12,7 +12,7 @@ async function getData() {
     const res = await instance.get("/products");
     return res.data.products;
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 }
 

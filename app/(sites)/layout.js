@@ -5,7 +5,7 @@ import { Inconsolata } from "next/font/google";
 
 const inconsolata = Inconsolata({ subsets: ["latin"] });
 
-export default function layout({ children }) {
+export default function SitesLayout({ children }) {
   return (
     <section className={`px-8 xl:px-16 ${inconsolata.className}`}>
       <TopNavbar />

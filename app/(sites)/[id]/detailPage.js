@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function DetailPage({ session }) {
+  const userId = session?.user?.id;
   if (session === null) {
     toast.error("Anda Belum Login");
     redirect("/login");
@@ -29,6 +30,24 @@ export default function DetailPage({ session }) {
         });
     };
   }, []);
+
+  const buyHandler = async () => {
+    try {
+      const data = {
+        userId,
+        name_product: product.name_product,
+        price: product.price,
+        image: product.image.url,
+      };
+      if (!data) {
+        throw new Error("Data Tidak Ada");
+      }
+      const res = await instance.post("/orders", data);
+      toast.success("Berhasil Meng-order");
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
 
   return (
     <div className="my-3 md:mt-24">
@@ -79,7 +98,9 @@ export default function DetailPage({ session }) {
               </div>
             </div>
           </div>
-          <Button className={"rounded-xl w-full mt-5"}>Add To Buy</Button>
+          <Button onClick={buyHandler} className={"rounded-xl w-full mt-5"}>
+            Add To Buy
+          </Button>
         </div>
       )}
     </div>

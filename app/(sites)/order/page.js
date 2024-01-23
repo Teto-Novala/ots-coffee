@@ -3,19 +3,21 @@ import { getServerSession } from "next-auth";
 import { instance } from "@/app/axios/axiosConfig";
 import OrderPage from "./orderPage";
 
-async function getData() {
+async function getData(id) {
   try {
-    const res = await instance.get("/orders");
+    const res = await instance.get(`/orders/${id}`);
     return res.data.orders;
   } catch (error) {
     console.log(error);
   }
 }
 
+export const revalidate = 10;
+
 export default async function Page() {
   const session = await getServerSession(authOptions);
-
-  const orders = await getData();
+  const id = session?.user?.id;
+  const orders = await getData(id);
   return (
     <section>
       <OrderPage session={session} orders={orders} />

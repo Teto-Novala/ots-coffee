@@ -1,8 +1,8 @@
-import { Inter } from "next/font/google";
 import { Inconsolata } from "next/font/google";
 import "./globals.css";
 import Provider from "./context/authContext";
 import ToasterContext from "./context/ToasterContext";
+import StoreProvider from "./components/StoreProvider";
 const inconsolata = Inconsolata({ subsets: ["latin"] });
 
 export const metadata = {
@@ -17,7 +17,9 @@ export default function RootLayout({ children }) {
         className={`${inconsolata.className} bg-[url(../public/coffee-background.svg)] text-white text-base object-cover`}
       >
         <Provider>
-          <ToasterContext /> {children}
+          <StoreProvider>
+            <ToasterContext /> {children}
+          </StoreProvider>
         </Provider>
       </body>
     </html>
